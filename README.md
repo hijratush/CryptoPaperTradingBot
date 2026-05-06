@@ -1,0 +1,2 @@
+# CryptoPaperTradingBot
+Simulasi Crypto Trading
