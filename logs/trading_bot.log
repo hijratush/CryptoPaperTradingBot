@@ -1,0 +1,134 @@
+2026-05-06 13:41:25 | INFO     | main                           | ============================================================
+2026-05-06 13:41:25 | INFO     | main                           |   Crypto Paper Trading Bot — Starting Up
+2026-05-06 13:41:25 | INFO     | main                           |   Symbols  : BTCUSDT, ETHUSDT, BNBUSDT, SOLUSDT, ADAUSDT, XRPUSDT, DOGEUSDT, AVAXUSDT
+2026-05-06 13:41:25 | INFO     | main                           |   Balance  : 100.00 USDT
+2026-05-06 13:41:25 | INFO     | main                           |   Taker fee: 0.2644%
+2026-05-06 13:41:25 | INFO     | main                           |   Dashboard: http://localhost:8080
+2026-05-06 13:41:25 | INFO     | main                           | ============================================================
+2026-05-06 13:41:25 | INFO     | src.data.history_seeder        | [Seeder] Starting — 8 symbols × ['1h', '15m', '5m'] = 24 requests, 200 candles each
+2026-05-06 13:41:25 | INFO     | src.data.history_seeder        | [Seeder] BTCUSDT    1h   → 199 candles loaded
+2026-05-06 13:41:26 | INFO     | src.data.history_seeder        | [Seeder] BTCUSDT    15m  → 199 candles loaded
+2026-05-06 13:41:26 | INFO     | src.data.history_seeder        | [Seeder] BTCUSDT    5m   → 199 candles loaded
+2026-05-06 13:41:26 | INFO     | src.data.history_seeder        | [Seeder] ETHUSDT    1h   → 199 candles loaded
+2026-05-06 13:41:27 | INFO     | src.data.history_seeder        | [Seeder] ETHUSDT    15m  → 199 candles loaded
+2026-05-06 13:41:27 | INFO     | src.data.history_seeder        | [Seeder] ETHUSDT    5m   → 199 candles loaded
+2026-05-06 13:41:27 | INFO     | src.data.history_seeder        | [Seeder] BNBUSDT    1h   → 199 candles loaded
+2026-05-06 13:41:28 | INFO     | src.data.history_seeder        | [Seeder] BNBUSDT    15m  → 199 candles loaded
+2026-05-06 13:41:28 | INFO     | src.data.history_seeder        | [Seeder] BNBUSDT    5m   → 199 candles loaded
+2026-05-06 13:41:28 | INFO     | src.data.history_seeder        | [Seeder] SOLUSDT    1h   → 199 candles loaded
+2026-05-06 13:41:29 | INFO     | src.data.history_seeder        | [Seeder] SOLUSDT    15m  → 199 candles loaded
+2026-05-06 13:41:29 | INFO     | src.data.history_seeder        | [Seeder] SOLUSDT    5m   → 199 candles loaded
+2026-05-06 13:41:29 | INFO     | src.data.history_seeder        | [Seeder] ADAUSDT    1h   → 199 candles loaded
+2026-05-06 13:41:30 | INFO     | src.data.history_seeder        | [Seeder] ADAUSDT    15m  → 199 candles loaded
+2026-05-06 13:41:30 | INFO     | src.data.history_seeder        | [Seeder] ADAUSDT    5m   → 199 candles loaded
+2026-05-06 13:41:30 | INFO     | src.data.history_seeder        | [Seeder] XRPUSDT    1h   → 199 candles loaded
+2026-05-06 13:41:31 | INFO     | src.data.history_seeder        | [Seeder] XRPUSDT    15m  → 199 candles loaded
+2026-05-06 13:41:31 | INFO     | src.data.history_seeder        | [Seeder] XRPUSDT    5m   → 199 candles loaded
+2026-05-06 13:41:31 | INFO     | src.data.history_seeder        | [Seeder] DOGEUSDT   1h   → 199 candles loaded
+2026-05-06 13:41:32 | INFO     | src.data.history_seeder        | [Seeder] DOGEUSDT   15m  → 199 candles loaded
+2026-05-06 13:41:32 | INFO     | src.data.history_seeder        | [Seeder] DOGEUSDT   5m   → 199 candles loaded
+2026-05-06 13:41:32 | INFO     | src.data.history_seeder        | [Seeder] AVAXUSDT   1h   → 199 candles loaded
+2026-05-06 13:41:33 | INFO     | src.data.history_seeder        | [Seeder] AVAXUSDT   15m  → 199 candles loaded
+2026-05-06 13:41:33 | INFO     | src.data.history_seeder        | [Seeder] AVAXUSDT   5m   → 199 candles loaded
+2026-05-06 13:41:33 | INFO     | src.data.history_seeder        | [Seeder] Done in 8.5s — 24/24 OK, 0 failed
+2026-05-06 13:41:33 | INFO     | src.data.price_store           | PriceStore started
+2026-05-06 13:41:33 | INFO     | src.core.engine                | Paper Trading Engine started | Initial balance: 100.00 USDT
+2026-05-06 13:41:33 | INFO     | src.strategy.smc_strategy      | SMC Intraday Strategy started (HTF=1H, Mid=15m, LTF=5m)
+2026-05-06 13:41:33 | INFO     | main                           | All systems running. Dashboard → http://localhost:8080
+2026-05-06 13:41:33 | INFO     | src.data.feed                  | Starting Tokocrypto feed for 8 symbols
+2026-05-06 13:41:33 | INFO     | src.data.kline_feed            | KlineFeed starting — 8 symbols × ['1h', '15m', '5m'] = 24 streams
+2026-05-06 13:41:33 | INFO     | src.data.feed                  | [WS #1] Connecting to wss://stream-cloud.tokocrypto.site/stream
+2026-05-06 13:41:33 | INFO     | src.data.kline_feed            | [KlineFeed #1] Connecting to wss://stream-cloud.tokocrypto.site/stream
+2026-05-06 13:41:34 | INFO     | src.data.kline_feed            | [KlineFeed #1] Connected ✓
+2026-05-06 13:41:34 | INFO     | src.data.feed                  | [WS #1] Connected ✓
+2026-05-06 13:41:34 | INFO     | ws.events                      | [WS] Connected (attempt #1)
+2026-05-06 13:41:34 | INFO     | src.data.feed                  | [WS] Subscribed to 8 streams: ['btcusdt@aggTrade', 'ethusdt@aggTrade', 'bnbusdt@aggTrade']…
+2026-05-06 13:42:01 | INFO     | src.strategy.smc_strategy      | [ENTRY] BTCUSDT @ 81407.0900 | SMC Intraday | bias=BULLISH | POI=OB(✓) OTE=✗ LTF=✓(choch) | SL=79778.9482 TP=83035.2318
+2026-05-06 13:42:01 | INFO     | src.core.engine                | [BUY ] BTCUSDT      | qty=0.000123 | price=81407.0900 | cost=10.0000 USDT | fee=0.0264 USDT | balance=90.0000 USDT
+2026-05-06 13:42:33 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9727 USDT
+2026-05-06 13:43:33 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9771 USDT
+2026-05-06 13:44:33 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9774 USDT
+2026-05-06 13:45:33 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9830 USDT
+2026-05-06 13:46:33 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9821 USDT
+2026-05-06 13:47:33 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9830 USDT
+2026-05-06 13:48:33 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9820 USDT
+2026-05-06 13:49:33 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9868 USDT
+2026-05-06 13:50:33 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9843 USDT
+2026-05-06 13:51:33 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9832 USDT
+2026-05-06 13:52:33 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9840 USDT
+2026-05-06 13:53:33 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9809 USDT
+2026-05-06 13:54:33 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9814 USDT
+2026-05-06 13:55:33 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9811 USDT
+2026-05-06 13:56:33 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9815 USDT
+2026-05-06 13:57:33 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9833 USDT
+2026-05-06 13:58:33 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9827 USDT
+2026-05-06 13:59:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9841 USDT
+2026-05-06 14:00:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9839 USDT
+2026-05-06 14:01:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9825 USDT
+2026-05-06 14:01:47 | INFO     | src.strategy.smc_strategy      | [ENTRY] DOGEUSDT @ 0.1156 | SMC Intraday | bias=BULLISH | POI=OB(✓) OTE=✗ LTF=✓(ema_cross) | SL=0.1133 TP=0.1180
+2026-05-06 14:01:47 | INFO     | src.core.engine                | [BUY ] DOGEUSDT     | qty=86.234022 | price=0.1156 | cost=9.9985 USDT | fee=0.0264 USDT | balance=80.0015 USDT
+2026-05-06 14:02:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9405 USDT
+2026-05-06 14:03:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9598 USDT
+2026-05-06 14:04:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9599 USDT
+2026-05-06 14:05:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9486 USDT
+2026-05-06 14:06:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9395 USDT
+2026-05-06 14:07:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9403 USDT
+2026-05-06 14:08:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9592 USDT
+2026-05-06 14:09:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9693 USDT
+2026-05-06 14:10:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9763 USDT
+2026-05-06 14:11:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9859 USDT
+2026-05-06 14:12:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9876 USDT
+2026-05-06 14:13:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9692 USDT
+2026-05-06 14:14:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9738 USDT
+2026-05-06 14:15:00 | INFO     | src.strategy.smc_strategy      | [ENTRY] ADAUSDT @ 0.2636 | SMC Intraday | bias=BULLISH | POI=OB(✓) OTE=✗ LTF=✓(choch) | SL=0.2583 TP=0.2689
+2026-05-06 14:15:00 | INFO     | src.core.engine                | [BUY ] ADAUSDT      | qty=37.811155 | price=0.2636 | cost=9.9934 USDT | fee=0.0264 USDT | balance=70.0080 USDT
+2026-05-06 14:15:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9337 USDT
+2026-05-06 14:16:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.8984 USDT
+2026-05-06 14:17:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.8591 USDT
+2026-05-06 14:18:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9119 USDT
+2026-05-06 14:19:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9078 USDT
+2026-05-06 14:20:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9143 USDT
+2026-05-06 14:21:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9307 USDT
+2026-05-06 14:22:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=100.0212 USDT
+2026-05-06 14:23:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9748 USDT
+2026-05-06 14:24:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9857 USDT
+2026-05-06 14:25:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9926 USDT
+2026-05-06 14:26:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=100.0081 USDT
+2026-05-06 14:27:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9991 USDT
+2026-05-06 14:28:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9864 USDT
+2026-05-06 14:29:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9894 USDT
+2026-05-06 14:30:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9840 USDT
+2026-05-06 14:31:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9684 USDT
+2026-05-06 14:32:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9926 USDT
+2026-05-06 14:33:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9739 USDT
+2026-05-06 14:34:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9875 USDT
+2026-05-06 14:35:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9878 USDT
+2026-05-06 14:36:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9881 USDT
+2026-05-06 14:37:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9789 USDT
+2026-05-06 14:38:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9933 USDT
+2026-05-06 14:39:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=100.0145 USDT
+2026-05-06 14:40:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=100.0094 USDT
+2026-05-06 14:41:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=100.0154 USDT
+2026-05-06 14:42:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=100.0182 USDT
+2026-05-06 14:43:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9841 USDT
+2026-05-06 14:44:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9928 USDT
+2026-05-06 14:45:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9984 USDT
+2026-05-06 14:46:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=100.0088 USDT
+2026-05-06 14:47:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9911 USDT
+2026-05-06 14:48:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9933 USDT
+2026-05-06 14:49:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9867 USDT
+2026-05-06 14:50:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9945 USDT
+2026-05-06 14:51:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=100.0025 USDT
+2026-05-06 14:52:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9860 USDT
+2026-05-06 14:53:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9825 USDT
+2026-05-06 14:54:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9901 USDT
+2026-05-06 14:55:18 | INFO     | src.strategy.smc_strategy      | [ENTRY] BNBUSDT @ 637.8300 | SMC Intraday | bias=BULLISH | POI=FVG(✓) OTE=✗ LTF=✓(rejection) | SL=625.0734 TP=650.5866
+2026-05-06 14:55:18 | INFO     | src.core.engine                | [BUY ] BNBUSDT      | qty=0.015635 | price=637.8300 | cost=9.9992 USDT | fee=0.0264 USDT | balance=60.0088 USDT
+2026-05-06 14:55:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9596 USDT
+2026-05-06 14:56:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9404 USDT
+2026-05-06 14:57:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9464 USDT
+2026-05-06 14:58:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9527 USDT
+2026-05-06 14:59:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9368 USDT
+2026-05-06 15:00:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9478 USDT
+2026-05-06 15:01:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9488 USDT
+2026-05-06 15:02:34 | INFO     | snapshot                       | Portfolio snapshot | total_value=99.9856 USDT
