@@ -29,7 +29,7 @@ class Settings(BaseSettings):
     # --- Fees (Tokocrypto USDT pairs) ---
     TAKER_FEE: float = 0.001        # 0.10%
     MAKER_FEE: float = 0.001        # 0.10%
-    EXTRA_FEE_USDT: float = 0.001644  # VAT 0.12% + CFT 0.0444%
+    EXTRA_FEE_USDT: float = 0.001544
     MIN_ORDER_USDT: float = 1.0
 
     # --- Paper Trading capital ---
