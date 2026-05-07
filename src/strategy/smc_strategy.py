@@ -1,17 +1,18 @@
 """
-Trading Strategy: SMC Intraday / Scalping
+Trading Strategy: SMC Intraday — Conservative
 
 Timeframe stack:
   HTF Bias    : 1H  — market structure, OB, FVG, CHoCH/BoS, OTE
-  Mid confirm : 15m — POI refinement, structure shift
-  LTF entry   : 5m  — CHoCH, rejection candle, EMA cross
+  Mid confirm : 15m — POI refinement (tighter zones injected into HTF)
+  LTF entry   : 5m  — CHoCH + rejection candle + EMA cross
 
-Entry mode: MODERAT — needs 2 of 3 confirmations:
-  1. Price inside HTF POI (OB or FVG)
-  2. OTE retracement (0.618–0.786)
-  3. LTF structural confirmation (CHoCH or rejection + EMA cross)
+Entry mode: CONSERVATIVE — ALL 4 conditions must be met simultaneously:
+  1. Price inside HTF POI (OB or FVG from 1H or 15m)
+  2. Price in OTE retracement zone (0.618–0.786)
+  3. LTF CHoCH bullish on 5m (recent structure shift confirms reversal)
+  4. LTF EMA cross OR rejection candle on 5m (momentum confirmation)
 
-Any 2 of the above = valid entry.
+All 4 required = fewer trades, higher quality setups.
 
 Exit:
   - Stop loss  : CUT_LOSS_PCT below entry (default 2%)
@@ -20,6 +21,7 @@ Exit:
   - Trailing   : TRAILING_STOP_PCT after partial close
 
 Position sizing: POSITION_SIZE_PCT × total equity, max MAX_OPEN_POSITIONS.
+History seed  : 500 candles per timeframe via REST at startup.
 """
 from __future__ import annotations
 
@@ -465,16 +467,17 @@ class SMCSymbolState:
 
 class SMCStrategy:
     """
-    Intraday SMC strategy.
+    Intraday SMC strategy — Conservative mode.
 
     HTF  : 1H  — bias + POI (OB, FVG, OTE)
     Mid  : 15m — injected into HTF POI list for tighter zones
-    LTF  : 5m  — entry confirmation (CHoCH / rejection / EMA cross)
+    LTF  : 5m  — entry confirmation
 
-    Entry: MODERAT — 2 of 3 conditions:
-      1. In HTF POI (OB or FVG)
+    Entry: CONSERVATIVE — ALL 4 conditions required:
+      1. In HTF POI (OB or FVG from 1H/15m)
       2. In OTE zone (0.618–0.786 retracement)
-      3. LTF confirmation (CHoCH or rejection candle + EMA bullish)
+      3. LTF CHoCH bullish (structural confirmation of reversal)
+      4. LTF EMA cross OR rejection candle (momentum confirmation)
 
     Exit:
       SL          : CUT_LOSS_PCT below entry
@@ -599,7 +602,7 @@ class SMCStrategy:
         if htf.bias != Bias.BULLISH:
             return
 
-        # ── Condition 1: price inside a POI ──
+        # ── Condition 1: price inside a HTF POI (OB or FVG) ──
         in_demand_ob = any(
             ob.side == OrderSide.BUY and not ob.mitigated
             and ob.zone_low <= price <= ob.zone_high
@@ -612,15 +615,24 @@ class SMCStrategy:
         )
         cond_poi = in_demand_ob or in_bullish_fvg
 
-        # ── Condition 2: price in OTE zone ──
+        # ── Condition 2: price in OTE zone (0.618–0.786) ──
         cond_ote = htf.ote_zone is not None and htf.ote_zone.price_in_ote(price)
 
-        # ── Condition 3: LTF (5m) confirmation ──
-        cond_ltf, ltf_detail = await self._ltf_confirmed(symbol, price, state)
+        # ── Conditions 3 + 4: LTF (5m) — CHoCH AND (EMA cross OR rejection) ──
+        cond_choch, cond_momentum, ltf_detail = await self._ltf_confirmed(symbol, price, state)
 
-        # MODERAT mode: need at least 2 of 3 conditions
-        conditions_met = sum([cond_poi, cond_ote, cond_ltf])
-        if conditions_met < 2:
+        # CONSERVATIVE: ALL 4 conditions must be met
+        if not cond_poi:
+            log.debug(f"[SKIP] {symbol} — not in POI (price={price:.4f})")
+            return
+        if not cond_ote:
+            log.debug(f"[SKIP] {symbol} — not in OTE zone")
+            return
+        if not cond_choch:
+            log.debug(f"[SKIP] {symbol} — no LTF CHoCH ({ltf_detail})")
+            return
+        if not cond_momentum:
+            log.debug(f"[SKIP] {symbol} — no LTF momentum ({ltf_detail})")
             return
 
         # Build and execute setup
@@ -628,12 +640,10 @@ class SMCStrategy:
         if setup is None:
             return
 
-        poi_label = "OB" if in_demand_ob else ("FVG" if in_bullish_fvg else "—")
+        poi_label = "OB" if in_demand_ob else "FVG"
         note = (
-            f"SMC Intraday | bias=BULLISH | "
-            f"POI={poi_label}({'✓' if cond_poi else '✗'}) "
-            f"OTE={'✓' if cond_ote else '✗'} "
-            f"LTF={'✓' if cond_ltf else '✗'}({ltf_detail}) | "
+            f"SMC Intraday Conservative | bias=BULLISH | "
+            f"POI={poi_label} OTE=✓ CHoCH=✓ Momentum={ltf_detail} | "
             f"SL={setup.stop_loss:.4f} TP={setup.take_profit_1r:.4f}"
         )
         log.info(f"[ENTRY] {symbol} @ {price:.4f} | {note}")
@@ -658,56 +668,55 @@ class SMCStrategy:
 
     async def _ltf_confirmed(
         self, symbol: str, price: float, state: SMCSymbolState
-    ) -> tuple[bool, str]:
+    ) -> tuple[bool, bool, str]:
         """
-        Returns (confirmed: bool, detail: str).
+        Returns (choch_confirmed, momentum_confirmed, detail).
 
-        Confirmed if ANY of:
-          a) Bullish EMA13 × EMA21 cross on 5m
-          b) Rejection candle on last 5m bar AND EMA13 > EMA21
-          c) CHoCH bullish on recent 5m candles
+        Conservative requires BOTH:
+          choch_confirmed   : bullish CHoCH on recent 5m bars
+          momentum_confirmed: EMA13 cross above EMA21 OR rejection candle
+                              (both require EMA13 > EMA21 at time of check)
         """
         ltf = self._candle_provider(symbol, self.LTF_TIMEFRAME)
         if len(ltf) < self.LTF_CANDLES_NEEDED:
-            return False, "warming_up"
+            return False, False, "warming_up"
 
         closes = [c.close for c in ltf]
         fast_now  = ema(closes, settings.EMA_FAST)   # EMA 13
         slow_now  = ema(closes, settings.EMA_SLOW)    # EMA 21
         if fast_now is None or slow_now is None:
-            return False, "ema_unavail"
+            return False, False, "ema_unavail"
 
         prev_fast = state.prev_ema13_ltf
         prev_slow = state.prev_ema21_ltf
         state.prev_ema13_ltf = fast_now
         state.prev_ema21_ltf = slow_now
 
-        # a) EMA cross
+        # ── Condition 3: CHoCH bullish on recent 5m ──
+        window = ltf[-40:]
+        sh5, sl5 = find_swing_highs_lows(window, lookback=2)
+        sb5 = detect_structure_breaks(window, sh5, sl5, symbol, self.LTF_TIMEFRAME)
+        choch_confirmed = any(
+            sb.direction == OrderSide.BUY and sb.is_choch
+            for sb in sb5[-6:]
+        )
+
+        # ── Condition 4: EMA cross OR rejection candle (momentum) ──
         ema_cross = (
             prev_fast is not None and prev_slow is not None
             and prev_fast <= prev_slow
             and fast_now > slow_now
         )
-
-        # b) Rejection candle with EMA bullish
         rejection = is_rejection_candle(ltf[-1]) and fast_now > slow_now
 
-        # c) CHoCH on last 30 bars of 5m
-        window = ltf[-30:]
-        sh5, sl5 = find_swing_highs_lows(window, lookback=2)
-        sb5 = detect_structure_breaks(window, sh5, sl5, symbol, self.LTF_TIMEFRAME)
-        ltf_choch = any(
-            sb.direction == OrderSide.BUY and sb.is_choch
-            for sb in sb5[-5:]
+        momentum_confirmed = ema_cross or rejection
+        detail = (
+            f"choch={'✓' if choch_confirmed else '✗'} "
+            f"cross={'✓' if ema_cross else '✗'} "
+            f"rej={'✓' if rejection else '✗'} "
+            f"ema=({fast_now:.2f}/{slow_now:.2f})"
         )
-
-        if ema_cross:
-            return True, "ema_cross"
-        if rejection:
-            return True, "rejection"
-        if ltf_choch:
-            return True, "choch"
-        return False, f"none(f={fast_now:.2f},s={slow_now:.2f})"
+        return choch_confirmed, momentum_confirmed, detail
 
     # ── Setup builder ─────────────────────────
 
