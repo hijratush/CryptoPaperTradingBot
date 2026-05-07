@@ -32,7 +32,7 @@ _REST_URL = "https://www.tokocrypto.site/api/v3/klines"
 SEED_TIMEFRAMES = ["1h", "15m", "5m"]
 
 # How many candles to fetch per (symbol, timeframe)
-SEED_LIMIT = 200
+SEED_LIMIT = 500
 
 # Tokocrypto interval strings (same as WS)
 _TF_INTERVAL = {
